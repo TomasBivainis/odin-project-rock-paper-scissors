@@ -2,9 +2,31 @@
 <html>
   <head>
     <title>Leessssa a goooo</title>
+    <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
+
+    <div class="text">
+      <h1 id="score">Welcome to rock, paper, scissors!</h1>
+      <h2 id="result"></h2>
+    </div>
+
+    <div class="btns">
+      <button id="rock">Rock</button>
+      <button id="paper">Paper</button>
+      <button id="scissors">Scissors</button>
+    </div>
+
     <script>
+      let playerScore = 0;
+      let computerScore = 0;
+
+      const btns = document.querySelectorAll('button');
+
+      btns.forEach(btn => {
+        btn.addEventListener('click', playRound);
+      })
+
       function getComputerChoice() {
         const randomNumber = Math.floor(Math.random()*3);
 
@@ -19,76 +41,62 @@
         }
       }
 
-      function playRound(playerSelection, computerSelection){
-        playerSelection = playerSelection.toLowerCase();
+      function playRound(){
+        const playerSelection = this.id;
+        const computerSelection = getComputerChoice();
+
+        const result = document.querySelector('#result')
 
         if(playerSelection === "rock" && computerSelection === "Scissors"){
-          return "Player";
+          result.textContent = "Player";
         }
         else if(playerSelection === "rock" && computerSelection === "Rock"){
-          return "Tie";
+          result.textContent = "Tie";
         }
         else if(playerSelection === "rock" && computerSelection === "Paper"){
-          return "Computer";
+          result.textContent = "Computer";
         }
         else if(playerSelection === "paper" && computerSelection === "Scissors"){
-          return "Computer";
+          result.textContent = "Computer";
         }
         else if(playerSelection === "paper" && computerSelection === "Rock"){
-          return "Player";
+          result.textContent = "Player";
         }
         else if(playerSelection === "paper" && computerSelection === "Paper"){
-          return "Tie";
+          result.textContent = "Tie";
         }
         else if(playerSelection === "scissors" && computerSelection === "Scissors"){
-          return "Tie";
+          result.textContent = "Tie";
         }
         else if(playerSelection === "scissors" && computerSelection === "Rock"){
-          return "Computer";
+          result.textContent = "Computer";
         }
         else if(playerSelection === "scissors" && computerSelection === "Paper"){
-          return "Player";
+          result.textContent = "Player";
         }
+
+        if(result.textContent === "Player") {
+          playerScore++;
+        }
+        else if(result.textContent === "Computer"){
+          computerScore++;
+        }
+
+        if(playerScore === 5 || computerScore === 5) {
+          
+
+          playerScore = 0;
+          computerScore = 0;
+
+          document.querySelector("#score").textContent = `${result.textContent} wins the game!`;
+          result.textContent = "";
+          return;
+        }
+
+        document.querySelector("#score").textContent = `${playerScore} - ${computerScore}`;
+        if(result.textContent === "Tie") return;
+        result.textContent += " wins the round!";
       }
-
-      function game(){
-        let playerWins = 0;
-        let computerWins = 0;
-
-        for(let i = 0; i < 5; i++){
-
-          let player = prompt("Rock, paper or scissors?");
-
-
-          const result = playRound(player,getComputerChoice());
-
-          if(result === "Player"){
-            playerWins++;
-            console.log("Player wins this round!");
-          }
-          else if(result === "Computer"){
-            computerWins++;
-            console.log("Computer wins this round!");
-          }
-          else{
-             console.log("It's a tie!");
-          }
-
-          console.log(`The score is ${playerWins} - ${computerWins} (Player - Computer)`);
-        }
-
-        if(playerWins > computerWins){
-          console.log("The player wins the game!");
-        }
-        else if(computerWins > playerWins){
-          console.log("Computer wins the game!");
-        }
-        else{
-          console.log("It's a tie!");
-        }
-      }
-
-      game();
     </script>
   </body>
 </html>
