@@ -7,8 +7,8 @@
   <body>
 
     <div class="text">
-      <h1 id="score">Welcome to rock, paper, scissors!</h1>
-      <h2 id="result"></h2>
+      <h1 id="score" class="fade-in">Welcome to rock, paper, scissors!</h1>
+      <h2 id="result">Select one of the options to start playing...</h2>
     </div>
 
     <div class="btns">
@@ -21,11 +21,24 @@
       let playerScore = 0;
       let computerScore = 0;
 
+      
+
       const btns = document.querySelectorAll('button');
 
       btns.forEach(btn => {
         btn.addEventListener('click', playRound);
       })
+
+      document.querySelector("#score").addEventListener("animationend", () => {
+        document.querySelector("#result").classList.add("fade-in");
+        document.querySelector("#result").classList.add("opacity");
+        btns.forEach(btn => {
+          btn.classList.add("fade-in");
+          btn.classList.add("opacity")
+        })
+      })
+
+      
 
       function getComputerChoice() {
         const randomNumber = Math.floor(Math.random()*3);
@@ -89,7 +102,7 @@
           computerScore = 0;
 
           document.querySelector("#score").textContent = `${result.textContent} wins the game!`;
-          result.textContent = "";
+          result.textContent = "Want to play again? Chose an item..."
           return;
         }
 
